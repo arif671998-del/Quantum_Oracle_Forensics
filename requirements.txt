@@ -1,0 +1,7 @@
+dill==0.4.1
+numpy==2.5.4
+qiskit==2.5.2
+rustworkx==0.18.1
+scipy==1.18.1
+stevedore==5.9.1
+typing_extensions==4.16.0
