@@ -1,0 +1,11 @@
+{
+ "python": "3.13.9",
+ "qiskit": "2.5.2",
+ "numpy": "2.5.4",
+ "scipy": "1.18.1",
+ "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+ "seeds": "oracle: default_rng([family_index, rep, 99]); harness: default_rng([family_index, rep, noise_index, 7]); solver rng seed 12345",
+ "reps": 100,
+ "suite": "all",
+ "solver_tau": 0.98
+}
