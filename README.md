@@ -49,4 +49,16 @@ python -c "import solver; print(solver.solve)"
 | `REPORT.md`, `AI_DISCLOSURE.md`, `AI_USE_LOG.md` | report and AI-use disclosure |
 
 ## Results
-`<<FINAL NUMBERS: filled from logs/evaluation_report.md when the final run completes>>`
+Final run: 100 oracles per family per noise level, tau = 0.98, budget 60, fixed seeds
+(`logs/`, 17,600 tasks, 2.2 h on 8 cores, qiskit 2.5.2 / numpy 2.5.4 / scipy 1.18.1).
+
+| | normal (4%/2%) | stress (8%/4%) |
+|---|---|---|
+| accuracy | 0.990 | 0.964 |
+| worst family | 0.98 | 0.91 (grover, randfun) |
+| mean queries | 28.5 | 33.0 |
+
+Baselines (accuracy normal / stress): classical-only 0.552 / 0.481, single algorithm
+0.731 / 0.724, random 0.064 / 0.061, adaptivity off 0.944 / 0.886. Accuracy at caps
+20/30/40/50/60 (normal): 0.896 / 0.958 / 0.978 / 0.985 / 0.990. Max 24 s per oracle, 16 qubits.
+Details, confusion matrices and failure analysis: `REPORT.md`, `logs/evaluation_report.md`.

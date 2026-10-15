@@ -1,0 +1,75 @@
+{
+ "normal|constant": {
+  "bv": 2.5,
+  "grover": 15.7,
+  "read": 4.5
+ },
+ "normal|balanced": {
+  "bv": 3.3,
+  "g1": 22.0
+ },
+ "normal|linear": {
+  "bv": 3.4,
+  "read": 2.3
+ },
+ "normal|grover": {
+  "bv": 2.5,
+  "grover": 13.3,
+  "read": 5.3
+ },
+ "normal|randfun": {
+  "bv": 3.3,
+  "g1": 20.1,
+  "grover": 0.7,
+  "read": 0.5
+ },
+ "normal|simon": {
+  "probe": 20.4,
+  "read8": 18.0
+ },
+ "normal|simon2": {
+  "probe": 18.3,
+  "read8": 7.3
+ },
+ "normal|perm": {
+  "probe": 26.4,
+  "read8": 25.1
+ },
+ "stress|constant": {
+  "bv": 2.8,
+  "grover": 15.1,
+  "read": 5.5
+ },
+ "stress|balanced": {
+  "bv": 3.4,
+  "g1": 23.1
+ },
+ "stress|linear": {
+  "bv": 3.7,
+  "grover": 0.7,
+  "read": 2.5
+ },
+ "stress|grover": {
+  "bv": 3.1,
+  "grover": 20.9,
+  "read": 6.9
+ },
+ "stress|randfun": {
+  "bv": 3.6,
+  "g1": 26.0,
+  "grover": 2.0,
+  "read": 0.7
+ },
+ "stress|simon": {
+  "probe": 25.1,
+  "read8": 21.9
+ },
+ "stress|simon2": {
+  "probe": 21.8,
+  "read8": 11.9
+ },
+ "stress|perm": {
+  "probe": 29.1,
+  "read8": 25.9
+ }
+}
