@@ -19,7 +19,7 @@ plus the standard library).
 
 ## Install
 ```bash
-git clone https://github.com/arif671998-del/Quantum_PS1.git && cd Quantum_PS1
+git clone https://github.com/arif671998-del/Quantum_Oracle_Forensics.git && cd Quantum_Oracle_Forensics
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt     # tested with qiskit 2.5.2, numpy 2.5.4, scipy 1.18.1
 ```
