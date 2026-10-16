@@ -1,7 +1,5 @@
-dill==0.4.1
-numpy==2.5.4
-qiskit==2.5.2
-rustworkx==0.18.1
-scipy==1.18.1
-stevedore==5.9.1
-typing_extensions==4.16.0
+# Tested with Python 3.13.9, qiskit 2.5.2, numpy 2.5.4, scipy 1.18.1 (exact versions in logs/versions.json).
+# Version ranges (not exact pins) so it also installs on Python 3.10, which the problem statement allows.
+qiskit>=2.0,<3
+numpy>=2.0
+scipy>=1.10

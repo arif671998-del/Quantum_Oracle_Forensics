@@ -18,5 +18,5 @@ identifying one of 8 sealed noisy oracle families within 60 queries. Spec: the P
 ## Rules to respect
 - solver.py must not import oracle_sim or read anything outside itself; decisions only from run() results.
 - Never exceed the budget (a query = oracle gates in circuit x shots); solver tracks its own count.
-- Likelihoods assume stress noise (8% misfire / 4% readout) on purpose; do not "tune" to normal noise silently.
+- Likelihoods use a 50/50 mixture of normal and stress noise (noise level is a hidden variable; see REPORT.md §1).
 - Secrets: linear -> [a, b]; simon2 -> sorted list of 3; constant/grover/simon -> int; others None.

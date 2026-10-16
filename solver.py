@@ -6,8 +6,9 @@ Strategy (see REPORT.md): keep an exact Bayesian posterior over every
 (family, secret) hypothesis consistent with m; each query is picked by expected
 information gain per unit query cost; stop when the best hypothesis passes TAU
 and the family-specific confirmations (classical re-reads) are satisfied.
-All likelihoods assume the *stress* noise (8% misfire, 4% readout flip), so the
-same code is calibrated for both the normal and the doubled-noise setting.
+The noise level is not given to the solver, so it is a hidden variable: every
+likelihood is computed under both the normal (4% misfire, 2% readout flip) and the
+stress (8%, 4%) setting with a 50/50 prior, and decisions use the mixture.
 
 Only qiskit, numpy and the standard library are used; nothing outside this file
 is read, and every decision is made from results returned by run().
