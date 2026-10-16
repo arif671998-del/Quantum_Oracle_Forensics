@@ -1,11 +1,11 @@
 # QryptoNox Quantum Oracle Forensics: solver
 
-Team: Arif, Rohit, Mehul. Qiskit Fall Fest 2026 (QC@IITI, IIT Indore), QryptoNox industry challenge.
+Team: Arif, Rohit, Mehul.
 
 `solver.py` defines `solve(n, m, budget, families, run) -> (family, secret)`. It identifies
 which of 8 sealed noisy oracle families it faces, and its secret, in at most 60 queries.
 
-**How it works (one paragraph):** an exact Bayesian posterior over every (family, secret)
+**How it works:** an exact Bayesian posterior over every (family, secret)
 hypothesis consistent with `m`; each query (Bernstein-Vazirani probe, classical read,
 Grover(k), a one-iteration-Grover-then-read action, Simon probe, pair check) is chosen by
 expected information gain per query; the noise level (4%/2% or 8%/4%) is a hidden variable
@@ -14,8 +14,7 @@ family-specific classical confirmations are done. Details and results: `REPORT.p
 (source `REPORT.md`).
 
 ## Requirements
-Python 3.10+ (tested 3.13.9), `qiskit>=2,<3`, `numpy`, `scipy` (solver uses only qiskit and numpy
-plus the standard library).
+Python 3.10+ (tested 3.13.9), `qiskit>=2,<3`, `numpy`, `scipy` 
 
 ## Install
 ```bash
