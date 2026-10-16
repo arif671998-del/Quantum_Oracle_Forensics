@@ -7,7 +7,9 @@ quantum computing). **Date:** 2026-10-15/16.
 Claude Code (Anthropic, model Claude Sonnet 5.5) was used inside our repository as a coding and
 writing assistant for the whole project: reading the problem statement, building the local
 noisy oracle simulator, designing and writing `solver.py`, the test suite, the evaluation
-harness, and drafting the report and README. A line-by-line log is in `AI_USE_LOG.md`.
+harness, and drafting the report and README. We also used Claude in the Claude app (claude.ai) to explain the problem statement, advise on
+strategy, review our results against the report, and typeset the report PDF. A line-by-line
+log of the Claude Code work is in `AI_USE_LOG.md`.
 
 ## What the AI did and what the team did
 | AI | Team |

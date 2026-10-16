@@ -25,7 +25,7 @@ likelihood including both noise types (each table checked against 20,000 simulat
 **Noise.** The solver is not told the noise level, so it is a hidden variable: likelihoods are
 kept under 4%/2% and 8%/4% with a 50/50 prior and decisions use the posterior marginalised
 over it. In a paired test on identical oracles this kept accuracy equal (10 oracles won, 10
-lost) and saved 1.1 queries on average (95% CI -1.4 to -0.8) (§3).
+lost) and saved 1.1 queries on average (95% CI -1.4 to -0.8) (`logs_tau/pairwise_tau.md`).
 
 **Choosing the next query.** Maximise expected decision-entropy reduction per query cost over
 {`bv`, `read` at a fresh x, `read` at the best Grover candidate, `g1`, `grover(k)`, k=2..12;
@@ -53,24 +53,32 @@ therefore never "proved", only made likely).
 * **tau = 0.98** by a *pre-registered* paired sweep (40 oracles/family/noise, same oracles for
   every setting): the lowest tau within 0.5 points of the best accuracy.
 
+
 | tau (mixture, pooled both noises, 640 oracles) | accuracy | mean queries | worst family |
 |---|---|---|---|
 | 0.98 | 0.9766 | 30.6 | 0.900 |
 | 0.99 | 0.9797 | 33.6 | 0.925 |
 | 0.995 | 0.9812 | 35.5 | 0.925 |
 
+
+Tau sensitivity in the final run (cap 60, same oracles; run *after* the tau choice above and not used to re-tune it):
+
+| tau | acc normal | worst fam | saving | acc stress | worst fam | saving |
+|---|---|---|---|---|---|---|
+| 0.95 | 0.984 | 0.95 | 0.592 | 0.945 | 0.87 | 0.535 |
+| 0.98 | 0.990 | 0.98 | 0.526 | 0.964 | 0.91 | 0.457 |
+| 0.99 | 0.994 | 0.99 | 0.477 | 0.969 | 0.91 | 0.410 |
+
 * **perm is the expensive family** because its data (uniform) cannot reveal the noise level and
   ~11,000 alternatives are only softly penalised: a wrong simon `s` is contradicted by a sample
   with y·s=1, but readout noise produces such samples from a true oracle with probability
-  0.04/0.08/0.14/0.24 for |s|=1,2,4,8 (likelihood ratio 0.08-0.49 per violating sample, not 0).
+  0.04/0.08/0.14/0.24 for |s|=1,2,4,8 (stress noise, readout flip 4%) (likelihood ratio 0.08-0.49 per violating sample, not 0).
 * **Grover limit under noise** (exact enumeration of misfire patterns): success per shot after
   readout, normal/stress: k=4 0.22/0.16, k=6 0.38/0.28, k=8 0.53/0.37, k=12 0.68/0.47 (noise-free
   k=12 gives 1.0). A k=12 circuit has zero misfires only 61%/37% of the time, so the solver uses
   k=6-8; a 1-in-256 item is typically found in 2-4 shots, but absence can never be certain.
 
 ## 3. Results (100 oracles per family per noise level)
-
-Main solver (cap 60, tau 0.98), 100 oracles per family per noise level.
 
 | family | acc normal | mean q normal | acc stress | mean q stress |
 |---|---|---|---|---|
@@ -86,9 +94,7 @@ Main solver (cap 60, tau 0.98), 100 oracles per family per noise level.
 
 Worst-family accuracy: normal 0.98, stress 0.91. Query saving (correct tasks, vs 60): normal 0.526, stress 0.457. Max time per oracle 24.1 s; max qubits 16.
 
-**Budget split** (mean queries per oracle spent on each action, normal noise; the rest of the 60 is unspent):
-
-**constant** bv 2.5, grover 15.7, read 4.5; **balanced** bv 3.3, g1 22.0; **linear** bv 3.4, read 2.3; **grover** bv 2.5, grover 13.3, read 5.3; **randfun** bv 3.3, g1 20.1, grover 0.7, read 0.5; **simon** probe 20.4, read8 18.0; **simon2** probe 18.3, read8 7.3; **perm** probe 26.4, read8 25.1.
+**Budget split** (mean queries per oracle spent on each action, normal noise; the rest of the 60 is unspent): **constant** bv 2.5, grover 15.7, read 4.5; **balanced** bv 3.3, g1 22.0; **linear** bv 3.4, read 2.3; **grover** bv 2.5, grover 13.3, read 5.3; **randfun** bv 3.3, g1 20.1, grover 0.7, read 0.5; **simon** probe 20.4, read8 18.0; **simon2** probe 18.3, read8 7.3; **perm** probe 26.4, read8 25.1.
 
 **Accuracy as a function of the query cap** (solver told budget = cap; saving always vs 60):
 
@@ -123,15 +129,28 @@ A classical-only strategy (same inference, reads only; birthday search for m=8) 
 
 ## 5. Failure analysis
 
-* **normal**: 26 wrong of 2400: balanced -> randfun x6; randfun -> grover x5; simon2 -> simon x5; linear (right family, wrong secret) x3; grover -> constant x3; randfun -> balanced x2; randfun -> linear x1; simon -> simon2 x1.
-* **stress**: 98 wrong of 2400: grover -> constant x24; randfun -> balanced x23; simon -> perm x22; balanced -> randfun x9; randfun -> grover x6; simon2 -> simon x6; linear (right family, wrong secret) x3; grover (right family, wrong secret) x3; randfun -> linear x1; simon -> simon2 x1.
+* **normal**: 8 wrong of 800: balanced -> randfun x2; randfun -> grover x2; simon2 -> simon x2; linear (right family, wrong secret) x1; grover -> constant x1.
+* **stress**: 29 wrong of 800: grover -> constant x8; randfun -> balanced x7; simon -> perm x6; balanced -> randfun x2; randfun -> grover x2; simon2 -> simon x2; linear (right family, wrong secret) x1; grover (right family, wrong secret) x1.
+
+Stress confusion matrix (rows = true family, columns = answer; `none` = no answer; 100 oracles per row):
+
+| true \ answer | const | bal | linear | grover | rand | simon | simon2 | perm | none |
+|---|---|---|---|---|---|---|---|---|---|
+| constant | 100 | . | . | . | . | . | . | . | . |
+| balanced | . | 98 | . | . | 2 | . | . | . | . |
+| linear | . | . | 100 | . | . | . | . | . | . |
+| grover | 8 | . | . | 92 | . | . | . | . | . |
+| randfun | . | 7 | . | 2 | 91 | . | . | . | . |
+| simon | . | . | . | . | . | 94 | . | 6 | . |
+| simon2 | . | . | . | . | . | 2 | 98 | . | . |
+| perm | . | . | . | . | . | . | . | 100 | . |
 
 Reading: **grover -> constant** is the dominant structural error: a 1-in-256 item that the
-2-4 affordable Grover shots (about 3 at stress) miss is indistinguishable from constant 0, and the posterior is
+2-4 affordable Grover shots miss is indistinguishable from constant 0, and the posterior is
 right to fall back on it. **balanced <-> randfun** is the weakest-signal pair: it rests on a
 zero-string count and one-bit statistics, with randfun's ones-fraction overlapping balanced
-only at its tails. **simon -> perm / simon2** occurs when the period's weight is large
-(|s| near 8), where readout noise makes violating samples common. Fixes we did not make:
+only at its tails. At stress noise **simon -> perm** occurs when readout noise makes
+violating samples common (see §2, perm bullet), so the data look uniform. Fixes we did not make:
 spending more shots on Grover costs queries on every constant-0 task; a lower tau would
 convert some of these into early wrong answers.
 
